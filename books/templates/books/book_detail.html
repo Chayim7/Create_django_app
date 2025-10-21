@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}{{ book.title }} | LITReview{% endblock %}
+
+{% block content %}
+<h2>{{ book.title }}</h2>
+
+{% if book.image %}
+    <img src="{{ book.image.url }}" alt="{{ book.title }}" style="max-height:150px;">
+{% endif %}
+
+<p>{{ book.description }}</p>
+
+{% if user.is_authenticated %}
+    {% if user_review %}
+        <p><strong>You already reviewed this book.</strong></p>
+        <p><a href="#">Edit</a> | <a href="#">Delete</a></p>  <!-- optional for MVP -->
+    {% else %}
+        <p><a href="{% url 'review_create' book.id %}">Write a Review</a></p>
+    {% endif %}
+{% else %}
+    <p><a href="{% url 'login' %}">Log in</a> or <a href="{% url 'signup' %}">Sign up</a> to write a review.</p>
+{% endif %}
+
+<hr>
+
+<h3>All Reviews</h3>
+<ul>
+    {% for review in book.reviews.all %}
+        <li>
+            <strong>{{ review.author.username }}</strong> — "{{ review.headline }}" ({{ review.rating }}/5)
+            <p>{{ review.body }}</p>
+            <small>{{ review.created_at|date:"Y-m-d" }}</small>
+        </li>
+    {% empty %}
+        <li>No reviews yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

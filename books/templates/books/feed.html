@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Feed | LITReview{% endblock %}
+
+{% block content %}
+<h2>Recent Reviews</h2>
+
+{% if user.is_authenticated %}
+    <p><a href="{% url 'all_reviews' %}">See all reviews</a></p>
+{% endif %}
+
+<ul>
+    {% for review in reviews %}
+        <li style="margin-bottom: 20px;">
+            <strong>{{ review.author.username }}</strong> reviewed 
+            <a href="{% url 'book_detail' review.book.id %}">{{ review.book.title }}</a>
+            <br>
+            <strong>{{ review.headline }}</strong> ({{ review.rating }}/5)
+            <p>{{ review.body }}</p>
+            <small>{{ review.created_at|date:"Y-m-d" }}</small>
+        </li>
+    {% empty %}
+        <li>No reviews yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

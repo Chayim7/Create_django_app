@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}My Profile | LITReview{% endblock %}
+
+{% block content %}
+<h2>My Profile</h2>
+
+<p><strong>Username:</strong> {{ user.username }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+
+<hr>
+
+<h3>People I Follow</h3>
+<ul>
+    {% for follow in following %}
+        <li>
+            <a href="{% url 'profile_other' follow.follows.username %}">
+                {{ follow.follows.username }}
+            </a>
+            (<a href="{% url 'follow_toggle' follow.follows.username %}">Unfollow</a>)
+        </li>
+    {% empty %}
+        <li>You are not following anyone yet.</li>
+    {% endfor %}
+</ul>
+
+<hr>
+
+<h3>My Followers</h3>
+<ul>
+    {% for follower in followers %}
+        <li>{{ follower.follower.username }}</li>
+    {% empty %}
+        <li>No one follows you yet.</li>
+    {% endfor %}
+</ul>
+
+<hr>
+
+<h3>My Reviews</h3>
+<ul>
+    {% for review in user_reviews %}
+        <li>
+            <strong>{{ review.book.title }}</strong> — {{ review.headline }} ({{ review.rating }}/5)
+            <p>{{ review.body }}</p>
+            <small>{{ review.created_at|date:"Y-m-d" }}</small>
+        </li>
+    {% empty %}
+        <li>You haven't written any reviews yet.</li>
+    {% endfor %}
+</ul>
+
+<p><a href="{% url 'user_search' %}">Search for users</a></p>
+
+{% endblock %}

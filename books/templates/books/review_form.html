@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Write Review | LITReview{% endblock %}
+
+{% block content %}
+<h2>Write a Review for "{{ book.title }}"</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Post Review</button>
+</form>
+{% endblock %}

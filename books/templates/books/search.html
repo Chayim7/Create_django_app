@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Book Search | LITReview{% endblock %}
+
+{% block content %}
+<h2>Search Books</h2>
+
+<form method="get" action="{% url 'book_search' %}">
+    <input type="text" name="q" placeholder="Search books..." value="{{ query }}">
+    <button type="submit">Search</button>
+</form>
+
+{% if user.is_authenticated %}
+    <p><a href="{% url 'book_create' %}">Add a New Book</a></p>
+{% else %}
+    <p><a href="{% url 'login' %}">Log in</a> or <a href="{% url 'signup' %}">Sign up</a> to add books.</p>
+{% endif %}
+
+<hr>
+
+<ul>
+    {% for book in books %}
+        <li>
+            {% if book.image %}
+                <img src="{{ book.image.url }}" alt="{{ book.title }}" style="height:80px;">
+            {% endif %}
+            <a href="{% url 'book_detail' book.id %}"><strong>{{ book.title }}</strong></a>
+            <p>{{ book.description|truncatechars:150 }}</p>
+            <small>{{ book.reviews.count }} reviews | Average score: {{ book.average_score|floatformat:1 }}</small>
+        </li>
+    {% empty %}
+        <li>No books found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

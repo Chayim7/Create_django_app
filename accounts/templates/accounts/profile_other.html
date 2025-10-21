@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}{{ profile_user.username }}'s Profile | LITReview{% endblock %}
+
+{% block content %}
+<h2>{{ profile_user.username }}'s Profile</h2>
+
+{% if profile_user == user %}
+    <p>This is your profile. <a href="{% url 'profile' %}">Go to your profile</a>.</p>
+{% else %}
+    {% if is_following %}
+        <p>You are following {{ profile_user.username }}.</p>
+        <a href="{% url 'follow_toggle' profile_user.username %}">Unfollow</a>
+    {% else %}
+        <a href="{% url 'follow_toggle' profile_user.username %}">Follow</a>
+    {% endif %}
+{% endif %}
+
+<hr>
+
+<h3>{{ profile_user.username }}'s Reviews</h3>
+<ul>
+    {% for review in reviews %}
+        <li>
+            <strong>{{ review.book.title }}</strong> — {{ review.headline }} ({{ review.rating }}/5)
+            <p>{{ review.body }}</p>
+            <small>{{ review.created_at|date:"Y-m-d" }}</small>
+        </li>
+    {% empty %}
+        <li>No reviews yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
