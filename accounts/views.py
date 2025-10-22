@@ -31,10 +31,23 @@ def profile_view(request):
 @login_required
 def profile_other(request, username):
     user_obj = get_object_or_404(User, username=username)
+
+    # Check if current user follows this profile
     is_following = Follow.objects.filter(follower=request.user, follows=user_obj).exists()
+
+    # Check if this user follows the current user (for "Follows you" badge)
+    follows_you = Follow.objects.filter(follower=user_obj, follows=request.user).exists()
+
+    # Get their followers and who they follow
+    followers = Follow.objects.filter(follows=user_obj)
+    following = Follow.objects.filter(follower=user_obj)
+
     return render(request, 'accounts/profile_other.html', {
         'profile_user': user_obj,
         'is_following': is_following,
+        'follows_you': follows_you,
+        'followers': followers,
+        'following': following,
         'reviews': user_obj.reviews.all(),
     })
 

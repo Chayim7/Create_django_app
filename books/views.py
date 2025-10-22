@@ -4,8 +4,16 @@ from .models import Book, Review
 from .forms import BookForm, ReviewForm
 from accounts.models import Follow
 
+@login_required
 def all_reviews(request):
-    reviews = Review.objects.select_related('book', 'author').all()
+   # Get IDs of users that the current user follows
+    following_users = Follow.objects.filter(follower=request.user).values_list('follows', flat=True)
+
+    # Fetch reviews from followed users and from the current user
+    reviews = Review.objects.select_related('book', 'author').filter(
+        author__in=list(following_users) + [request.user]
+    ).order_by('-created_at')
+
     return render(request, 'books/feed.html', {'reviews': reviews})
 
 @login_required

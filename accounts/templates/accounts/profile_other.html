@@ -7,6 +7,10 @@
 {% if profile_user == user %}
     <p>This is your profile. <a href="{% url 'profile' %}">Go to your profile</a>.</p>
 {% else %}
+    {% if follows_you %}
+        <p style="color: gray;">👋 Follows you</p>
+    {% endif %}
+
     {% if is_following %}
         <p>You are following {{ profile_user.username }}.</p>
         <a href="{% url 'follow_toggle' profile_user.username %}">Unfollow</a>
@@ -14,6 +18,26 @@
         <a href="{% url 'follow_toggle' profile_user.username %}">Follow</a>
     {% endif %}
 {% endif %}
+
+<hr>
+
+<h3>Followers</h3>
+<ul>
+    {% for f in followers %}
+        <li><a href="{% url 'profile_other' f.follower.username %}">{{ f.follower.username }}</a></li>
+    {% empty %}
+        <li>No followers yet.</li>
+    {% endfor %}
+</ul>
+
+<h3>Following</h3>
+<ul>
+    {% for f in following %}
+        <li><a href="{% url 'profile_other' f.follows.username %}">{{ f.follows.username }}</a></li>
+    {% empty %}
+        <li>Not following anyone yet.</li>
+    {% endfor %}
+</ul>
 
 <hr>
 
@@ -29,4 +53,6 @@
         <li>No reviews yet.</li>
     {% endfor %}
 </ul>
+
 {% endblock %}
+
