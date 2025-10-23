@@ -7,9 +7,9 @@ It allows users to discover, review, and follow others’ reading activity — a
 
 ## Features
 
-## User authentication (signup, login, logout)
+User authentication (signup, login, logout)
 
-## Follow/unfollow other users
+Follow/unfollow other users
 
 Personalized feed with reviews from followed users
 
@@ -99,8 +99,8 @@ python manage.py loaddata fixtures/seed.json
 python manage.py runserver
 
 
-Then open your browser and go to:
-## http://127.0.0.1:8000
+## Then open your browser and go to:
+http://127.0.0.1:8000
 
 ## Test Accounts
 Username	Password	Role
