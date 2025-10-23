@@ -15,7 +15,7 @@ Personalized feed with reviews from followed users
 
 Book search and creation
 
-✍️ Write, edit, and delete reviews (one per book per user)
+✍️ Write reviews (one per book per user)
 
 Public book pages showing all reviews
 
