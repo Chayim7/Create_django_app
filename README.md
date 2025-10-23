@@ -22,6 +22,7 @@ Public book pages showing all reviews
 Example users and posts via fixtures
 
 ## Project Structure
+
 litreview/
 ├── manage.py
 ├── README.md
@@ -67,6 +68,7 @@ litreview/
 └── venv/
 
 ⚙️ Installation & Setup
+
 1️⃣ Clone the repository
 git clone https://github.com/Chayim7/Create_django_app.git
 cd litreview
@@ -100,9 +102,11 @@ python manage.py runserver
 
 
 ## Then open your browser and go to:
+
 http://127.0.0.1:8000
 
 ## Test Accounts
+
 Username	Password	Role
 alice	alicepass	Regular User
 bob	bobpass	Regular User
@@ -110,6 +114,7 @@ bob	bobpass	Regular User
 Use these accounts to explore the app after loading fixtures.
 
 ## Core Pages Overview
+
 Page	URL	Description
 Login	/login/	User login page
 Signup	/signup/	Create a new account
